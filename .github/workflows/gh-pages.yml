@@ -1,4 +1,4 @@
-name: gh-pages 
+name: Build and deploy flutter apps.
 permissions:
   contents: write
 
@@ -7,24 +7,30 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-deploy:
+    name: "Build and deploy flutter web app."
     runs-on: ubuntu-latest
     defaults:
-      run:   
+      run:
         working-directory: ./test_counter_app
+
     steps:
       - name: checkout files
         uses: actions/checkout@v3
 
-      - name: build flutter files
+      - name: enable flutter web
+        run: flutter config --enable-web
+
+      - name: get dependencies and build flutter files
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - run: | 
+        run: | 
           flutter pub get
           flutter test
-          flutter build web --web-renderer=canvaskit --base-href '/flutter_staging/'
+          flutter build web --web-renderer=canvaskit --base-href='/flutter_staging/'
+
       - name: deploy to gh pages
         uses: JamesIves/github-pages-deploy-action@v4
         with: 
-          folder: ./test_counter_app/build
+          folder: ./test_counter_app/build/web
