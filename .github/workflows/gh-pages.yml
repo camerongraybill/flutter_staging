@@ -1,4 +1,4 @@
-name: Gh-Pages
+name: github-pages 
 
 on:
   push:
@@ -7,13 +7,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2 # Only works with v2
-      - uses: subosito/flutter-action@v1
-      - uses: bluefireteam/flutter-gh-pages@v7
-        with:
-          workingDir: test_counter_app/build/web 
-          webRenderer: canvaskit
-          targetBranch: main
-          baseHref: /test-counter/
+    - uses: actions/checkout@v3
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+    - name: Build and deploy flutter app to GH pages
+      working-directory: ./test_counter_app
+    - run: flutter pub get
+    - run: flutter test
+    - run: flutter build web
