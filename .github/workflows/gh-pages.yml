@@ -23,7 +23,7 @@ jobs:
       - run: | 
           flutter pub get
           flutter test
-          flutter build web --base-href /test-counter/
+          flutter build web --base-href /flutter_staging/
 
       - name: deploy to gh pages
         uses: JamesIves/github-pages-deploy-action@v4
