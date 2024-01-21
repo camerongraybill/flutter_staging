@@ -22,9 +22,8 @@ jobs:
           channel: 'stable'
       - run: | 
           flutter pub get
-          flutter config — enable-web
           flutter test
-          flutter build web --base-href /flutter_staging/
+          flutter build web --web-renderer=canvaskit --base-href '/flutter_staging/'
       - name: deploy to gh pages
         uses: JamesIves/github-pages-deploy-action@v4
         with: 
