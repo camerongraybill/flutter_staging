@@ -9,23 +9,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:   
+        working-directory: ./test_counter_app
     steps:
       - name: checkout files
         uses: actions/checkout@v3
-        working-directory: ./test_counter_app
 
       - name: build flutter files
         uses: subosito/flutter-action@v2
-        working-directory: ./test_counter_app
         with:
           channel: 'stable'
       - run: | 
           flutter pub get
           flutter test
           flutter build web --base-href /flutter_staging/
-
       - name: deploy to gh pages
         uses: JamesIves/github-pages-deploy-action@v4
-        working-directory: ./test_counter_app
         with: 
           folder: build/web
