@@ -10,9 +10,6 @@ jobs:
   build-and-deploy:
     name: "Build and deploy flutter web app."
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: test_counter_app
 
     steps:
       - name: checkout files
@@ -24,15 +21,19 @@ jobs:
           channel: 'stable'
 
       - name: enable flutter web
+        working-directory: ./test_counter_app
         run: flutter config --enable-web
 
       - name: pull dependencies
+        working-directory: ./test_counter_app
         run: flutter pub get
 
       - name: run tests
+        working-directory: ./test_counter_app
         run: flutter test
         
       - name: build web app
+        working-directory: ./test_counter_app
         run: flutter build web --web-renderer=canvaskit --base-href='/flutter_staging/'
 
       - name: deploy to gh pages
