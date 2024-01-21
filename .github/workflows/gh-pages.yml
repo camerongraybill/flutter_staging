@@ -39,4 +39,4 @@ jobs:
       - name: deploy to gh pages
         uses: JamesIves/github-pages-deploy-action@v4
         with: 
-          folder: test_counter_app/build
+          folder: test_counter_app/build/web
