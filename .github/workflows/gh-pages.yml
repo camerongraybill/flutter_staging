@@ -34,7 +34,7 @@ jobs:
         
       - name: build web app
         working-directory: test_counter_app
-        run: flutter build web --web-renderer=canvaskit --base-href='/flutter_staging/' --release
+        run: flutter build web --web-renderer canvaskit --base-href /flutter_staging/ --release
 
       - name: deploy to gh pages
         uses: JamesIves/github-pages-deploy-action@v4
