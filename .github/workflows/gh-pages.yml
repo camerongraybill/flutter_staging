@@ -18,13 +18,13 @@ jobs:
       - name: checkout files
         uses: actions/checkout@v3
 
-      - name: enable flutter web
-        run: flutter config --enable-web
-
       - name: set up flutter 
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+
+      - name: enable flutter web
+        run: flutter config --enable-web
 
       - name: pull dependencies
         run: flutter pub get
