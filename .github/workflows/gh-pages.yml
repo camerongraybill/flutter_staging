@@ -1,4 +1,6 @@
 name: gh-pages 
+permissions:
+  contents: write
 
 on:
   push:
@@ -11,10 +13,19 @@ jobs:
       run:   
         working-directory: ./test_counter_app
     steps:
-    - uses: actions/checkout@v3
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
-    - run: flutter pub get
-    - run: flutter test
-    - run: flutter build web
+      - name: checkout files
+        uses: actions/checkout@v3
+
+      - name: build flutter files
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+        run: | 
+          flutter pub get
+          flutter test
+          flutter build web --base-href /test-counter/
+
+      - name: deploy to gh pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with: 
+          folder: build 
