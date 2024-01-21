@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./test_counter_app
+        working-directory: test_counter_app
 
     steps:
       - name: checkout files
@@ -21,16 +21,21 @@ jobs:
       - name: enable flutter web
         run: flutter config --enable-web
 
-      - name: get dependencies and build flutter files
+      - name: set up flutter 
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-        run: | 
-          flutter pub get
-          flutter test
-          flutter build web --web-renderer=canvaskit --base-href='/flutter_staging/'
+
+      - name: pull dependencies
+        run: flutter pub get
+
+      - name: run tests
+        run: flutter test
+        
+      - name: build web app
+        run: flutter build web --web-renderer=canvaskit --base-href='/flutter_staging/'
 
       - name: deploy to gh pages
         uses: JamesIves/github-pages-deploy-action@v4
         with: 
-          folder: ./test_counter_app/build/web
+          folder: test_counter_app/build/web
