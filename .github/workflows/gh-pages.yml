@@ -22,6 +22,7 @@ jobs:
           channel: 'stable'
       - run: | 
           flutter pub get
+          flutter config — enable-web
           flutter test
           flutter build web --base-href /flutter_staging/
       - name: deploy to gh pages
